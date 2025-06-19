@@ -18,7 +18,7 @@ A full-stack web application for managing grocery items, featuring an AI-powered
 ---
 
 ## 🗂 Project Structure
-
+```bash
 Keep-It-Fresh/
 ├── .env
 ├── .gitignore
@@ -68,7 +68,7 @@ Keep-It-Fresh/
 │   │   ├── ocr.html
 │   │   └── register.html
 │   └── service-worker.js   # For offline support / push notifications
-
+```
 
 
 ---
