@@ -70,10 +70,28 @@ Keep-It-Fresh/
 │   └── service-worker.js   # For offline support / push notifications
 
 
-## 🚀 How to Run
 
-1. Clone the repo
-2. Install dependencies:
-   ```bash
-   npm install
+---
 
+## 🚀 How to Run the Project
+
+### 📦 Clone the Repository
+```bash
+git clone https://github.com/your-username/grocery-tracker.git
+cd grocery-tracker
+```
+### 📁 Setup Environment
+
+Create a new .env file based on this .env
+### 🔧 Install Dependencies
+```bash
+npm install
+```
+### ▶️ Start the Server
+```bash
+node backend/server.js
+```
+### 📌 Notes
+Ensure MongoDB is running locally or provide a MongoDB Atlas URI in .env.
+
+Service workers and push notifications are supported in supported browsers.
