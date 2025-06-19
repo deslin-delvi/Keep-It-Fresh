@@ -1,0 +1,22 @@
+/* Login Page Specific Styles */
+.form-container {
+    margin-top: 80px;
+  }
+  
+  .form-container p {
+    text-align: center;
+    margin-top: 20px;
+  }
+  
+  .form-container a {
+    color: #4CAF50;
+    text-decoration: none;
+  }
+  
+  .form-container a:hover {
+    text-decoration: underline;
+  }
+  
+  .form-group button {
+    width: 100%;
+  }

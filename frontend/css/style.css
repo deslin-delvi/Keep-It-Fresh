@@ -1,0 +1,348 @@
+/* Global Styles */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  line-height: 1.6;
+  color: #333;
+  background-color: #f4f7f9;
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 20px;
+}
+
+/* Button Styles */
+.btn {
+  display: inline-block;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
+  font-weight: 500;
+  text-decoration: none;
+  transition: background-color 0.3s ease;
+}
+
+.btn-small {
+  padding: 5px 10px;
+  font-size: 14px;
+}
+
+.btn-primary {
+  background-color: #4CAF50;
+  color: white;
+}
+
+.btn-primary:hover {
+  background-color: #45a049;
+}
+
+.btn-secondary {
+  background-color: #2196F3;
+  color: white;
+}
+
+.btn-secondary:hover {
+  background-color: #0b7dda;
+}
+
+.btn-danger {
+  background-color: #f44336;
+  color: white;
+}
+
+.btn-danger:hover {
+  background-color: #d32f2f;
+}
+
+/* Welcome Page */
+.welcome-card {
+  text-align: center;
+  background-color: white;
+  padding: 40px;
+  border-radius: 10px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  margin-top: 100px;
+}
+
+.welcome-card h1 {
+  margin-bottom: 20px;
+  color: #4CAF50;
+}
+
+.welcome-card p {
+  margin-bottom: 30px;
+  font-size: 18px;
+}
+
+.button-group {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+}
+
+/* Form Styles */
+.form-container {
+  background-color: white;
+  padding: 30px;
+  border-radius: 10px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  margin: 50px auto;
+  max-width: 500px;
+}
+
+.form-container h1 {
+  text-align: center;
+  margin-bottom: 30px;
+  color: #4CAF50;
+}
+
+.form-group {
+  margin-bottom: 20px;
+}
+
+.form-row {
+  display: flex;
+  gap: 15px;
+}
+
+.form-row .form-group {
+  flex: 1;
+}
+
+label {
+  display: block;
+  margin-bottom: 5px;
+  font-weight: 500;
+}
+
+input, select, textarea {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  font-size: 16px;
+}
+
+textarea {
+  resize: vertical;
+}
+
+.error-message {
+  color: #f44336;
+  margin-top: 10px;
+  font-size: 14px;
+}
+
+/* Header Styles */
+.header {
+  background-color: #4CAF50;
+  color: white;
+  padding: 15px 0;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.header-content {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.user-info {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+.user-info span {
+  font-weight: 500;
+}
+
+/* Main Content Styles */
+.main-content {
+  padding: 30px 0;
+}
+
+/* Grocery Actions */
+.grocery-actions {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 30px;
+}
+
+.filter-options {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.filter-options select {
+  width: auto;
+}
+
+/* Grocery List Styles */
+.grocery-list {
+    background-color: white;
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+  }
+  
+  .grocery-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 20px;
+    border-bottom: 1px solid #eee;
+    transition: background-color 0.2s ease;
+  }
+  
+  .grocery-item:last-child {
+    border-bottom: none;
+  }
+  
+  .grocery-item:hover {
+    background-color: #f9f9f9;
+  }
+  
+  .grocery-info {
+    flex: 1;
+  }
+  
+  .grocery-name {
+    font-weight: 600;
+    font-size: 18px;
+    margin-bottom: 5px;
+  }
+  
+  .grocery-details {
+    display: flex;
+    gap: 20px;
+    color: #666;
+    font-size: 14px;
+  }
+  
+  .grocery-category {
+    background-color: #e0e0e0;
+    padding: 3px 8px;
+    border-radius: 3px;
+    font-size: 12px;
+  }
+  
+  .grocery-actions {
+    display: flex;
+    gap: 10px;
+  }
+  
+  .grocery-expiry {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+  }
+  
+  .expiry-label {
+    font-weight: 500;
+  }
+  
+  .expiry-date {
+    font-weight: 400;
+  }
+  
+  .expired {
+    color: #f44336;
+  }
+  
+  .expiring-soon {
+    color: #ff9800;
+  }
+  
+  .fresh {
+    color: #4CAF50;
+  }
+  
+  /* Modal Styles */
+  .modal {
+    display: none;
+    position: fixed;
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0, 0, 0, 0.5);
+  }
+  
+  .modal-content {
+    background-color: white;
+    margin: 50px auto;
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    width: 90%;
+    max-width: 600px;
+    position: relative;
+  }
+  
+  .close-btn {
+    position: absolute;
+    top: 15px;
+    right: 20px;
+    font-size: 24px;
+    font-weight: bold;
+    cursor: pointer;
+  }
+  
+  .close-btn:hover {
+    color: #f44336;
+  }
+  
+  /* Loading styles */
+  .loading {
+    text-align: center;
+    padding: 30px;
+    color: #666;
+  }
+  
+  .empty-list {
+    text-align: center;
+    padding: 30px;
+    color: #666;
+  }
+  
+  /* Responsive Styles */
+  @media (max-width: 768px) {
+    .form-row {
+      flex-direction: column;
+      gap: 0;
+    }
+    
+    .grocery-actions {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 15px;
+    }
+    
+    .filter-options {
+      width: 100%;
+    }
+    
+    .grocery-item {
+      flex-direction: column;
+      align-items: flex-start;
+    }
+    
+    .grocery-item-actions {
+      margin-top: 15px;
+      align-self: flex-end;
+    }
+  }

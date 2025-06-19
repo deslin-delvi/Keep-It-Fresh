@@ -1,0 +1,22 @@
+# Node.js dependencies
+node_modules/
+
+# Environment variables
+.env
+
+# Uploaded files (user content)
+uploads/
+
+# Log files
+*.log
+
+# OS/System files
+.DS_Store
+Thumbs.db
+
+# Editor-specific
+.vscode/
+.idea/
+
+# Optional: trained data
+*.traineddata

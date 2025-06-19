@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Home - Grocery Expiry Tracker</title>
+  <link rel="stylesheet" href="../css/style.css">
+  <link rel="stylesheet" href="../css/chatbot.css">
+  <link rel="stylesheet" href="../css/ocr.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+</head>
+<body>
+  <header class="header">
+    <div class="header-content">
+      <h1>Grocery Expiry Tracker</h1>
+      <div class="user-info">
+        <span id="user-name"></span>
+        <button id="logout-btn" class="btn btn-small">Logout</button>
+      </div>
+    </div>
+  </header>
+  
+  <main class="main-content">
+    <div class="container">
+      <div class="grocery-actions">
+        <button id="add-grocery-btn" class="btn btn-primary">Add New Grocery</button>
+        <button id="scan-grocery-btn" onclick="window.location.href='ocr.html'" class="btn btn-secondary"><i class="fas fa-camera"></i> Scan Product</button>
+        
+        <div class="filter-options">
+          <label for="expiry-filter">Filter by:</label>
+          <select id="expiry-filter">
+            <option value="all">All Items</option>
+            <option value="expired">Expired</option>
+            <option value="expiring-soon">Expiring Soon (7 days)</option>
+            <option value="fresh">Fresh</option>
+          </select>
+        </div>
+      </div>
+
+      <div id="grocery-list" class="grocery-list">
+        <!-- Grocery items will be added here dynamically -->
+        <div class="loading">Loading your groceries...</div>
+      </div>
+    </div>
+
+    <!-- Add Grocery Modal -->
+    <div id="add-grocery-modal" class="modal">
+      <div class="modal-content">
+        <span class="close-btn">&times;</span>
+        <h2>Add New Grocery</h2>
+        <form id="add-grocery-form">
+          <div class="form-group">
+            <label for="grocery-name">Name</label>
+            <input type="text" id="grocery-name" name="name" required>
+          </div>
+          <div class="form-row">
+            <div class="form-group">
+              <label for="grocery-quantity">Quantity</label>
+              <input type="number" id="grocery-quantity" name="quantity" min="1" value="1" required>
+            </div>
+            <div class="form-group">
+              <label for="grocery-unit">Unit</label>
+              <input type="text" id="grocery-unit" name="unit" value="item">
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-group">
+              <label for="grocery-purchase-date">Purchase Date</label>
+              <input type="date" id="grocery-purchase-date" name="purchaseDate" required>
+            </div>
+            <div class="form-group">
+              <label for="grocery-expiry-date">Expiry Date</label>
+              <input type="date" id="grocery-expiry-date" name="expiryDate" required>
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="grocery-category">Category</label>
+            <select id="grocery-category" name="category">
+              <option value="fruits">Fruits</option>
+              <option value="vegetables">Vegetables</option>
+              <option value="dairy">Dairy</option>
+              <option value="meat">Meat</option>
+              <option value="grains">Grains</option>
+              <option value="snacks">Snacks</option>
+              <option value="beverages">Beverages</option>
+              <option value="frozen">Frozen</option>
+              <option value="canned">Canned</option>
+              <option value="general">General</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="grocery-notes">Notes</label>
+            <textarea id="grocery-notes" name="notes" rows="3"></textarea>
+          </div>
+          <div class="form-group">
+            <button type="submit" class="btn btn-primary">Add Grocery</button>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <!-- Edit Grocery Modal -->
+    <div id="edit-grocery-modal" class="modal">
+      <div class="modal-content">
+        <span class="close-btn">&times;</span>
+        <h2>Edit Grocery</h2>
+        <form id="edit-grocery-form">
+          <input type="hidden" id="edit-grocery-id">
+          <div class="form-group">
+            <label for="edit-grocery-name">Name</label>
+            <input type="text" id="edit-grocery-name" name="name" required>
+          </div>
+          <div class="form-row">
+            <div class="form-group">
+              <label for="edit-grocery-quantity">Quantity</label>
+              <input type="number" id="edit-grocery-quantity" name="quantity" min="1" required>
+            </div>
+            <div class="form-group">
+              <label for="edit-grocery-unit">Unit</label>
+              <input type="text" id="edit-grocery-unit" name="unit">
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-group">
+              <label for="edit-grocery-purchase-date">Purchase Date</label>
+              <input type="date" id="edit-grocery-purchase-date" name="purchaseDate" required>
+            </div>
+            <div class="form-group">
+              <label for="edit-grocery-expiry-date">Expiry Date</label>
+              <input type="date" id="edit-grocery-expiry-date" name="expiryDate" required>
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="edit-grocery-category">Category</label>
+            <select id="edit-grocery-category" name="category">
+              <option value="fruits">Fruits</option>
+              <option value="vegetables">Vegetables</option>
+              <option value="dairy">Dairy</option>
+              <option value="meat">Meat</option>
+              <option value="grains">Grains</option>
+              <option value="snacks">Snacks</option>
+              <option value="beverages">Beverages</option>
+              <option value="frozen">Frozen</option>
+              <option value="canned">Canned</option>
+              <option value="general">General</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="edit-grocery-notes">Notes</label>
+            <textarea id="edit-grocery-notes" name="notes" rows="3"></textarea>
+          </div>
+          <div class="form-group">
+            <button type="submit" class="btn btn-primary">Update Grocery</button>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <!-- OCR Modal -->
+    <div id="ocr-modal" class="modal">
+      <div class="modal-content">
+        <span class="close-btn">&times;</span>
+        <h2>Scan Product</h2>
+        <div class="ocr-container">
+          <div class="upload-container">
+            <input type="file" id="image-upload" accept="image/*" capture>
+            <button id="capture-btn" class="btn btn-secondary"><i class="fas fa-camera"></i> Take Photo</button>
+            <p>Or drag and drop an image here</p>
+          </div>
+            
+          <div class="preview-container">
+            <img id="image-preview" alt="Preview">
+          </div>
+            
+          <div class="result-container">
+            <h3>Detected Information</h3>
+            <div id="scan-status">Ready to scan</div>
+            <div id="scan-results"></div>
+                
+            <form id="ocr-grocery-form">
+              <div class="form-group">
+                <label for="ocr-grocery-name">Name</label>
+                <input type="text" id="ocr-grocery-name" name="name" required>
+              </div>
+              <div class="form-row">
+                <div class="form-group">
+                  <label for="ocr-grocery-quantity">Quantity</label>
+                  <input type="number" id="ocr-grocery-quantity" name="quantity" min="1" value="1" required>
+                </div>
+                <div class="form-group">
+                  <label for="ocr-grocery-unit">Unit</label>
+                  <input type="text" id="ocr-grocery-unit" name="unit" value="item">
+                </div>
+              </div>
+              <div class="form-row">
+                <div class="form-group">
+                  <label for="ocr-grocery-purchase-date">Purchase Date</label>
+                  <input type="date" id="ocr-grocery-purchase-date" name="purchaseDate" required>
+                </div>
+                <div class="form-group">
+                  <label for="ocr-grocery-expiry-date">Expiry Date</label>
+                  <input type="date" id="ocr-grocery-expiry-date" name="expiryDate" required>
+                </div>
+              </div>
+              <div class="form-group">
+                <label for="ocr-grocery-category">Category</label>
+                <select id="ocr-grocery-category" name="category">
+                  <option value="fruits">Fruits</option>
+                  <option value="vegetables">Vegetables</option>
+                  <option value="dairy">Dairy</option>
+                  <option value="meat">Meat</option>
+                  <option value="grains">Grains</option>
+                  <option value="snacks">Snacks</option>
+                  <option value="beverages">Beverages</option>
+                  <option value="frozen">Frozen</option>
+                  <option value="canned">Canned</option>
+                  <option value="general">General</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label for="ocr-grocery-notes">Notes</label>
+                <textarea id="ocr-grocery-notes" name="notes" rows="3"></textarea>
+              </div>
+              <div class="form-group">
+                <button type="submit" class="btn btn-primary">Add to My List</button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <!-- Tesseract.js for OCR -->
+  <script src="https://cdn.jsdelivr.net/npm/tesseract.js@4.1.1/dist/tesseract.min.js"></script>
+  <script src="../js/grocery.js"></script>
+  <script src="../js/chatbot.js"></script>
+  <script src="../js/ocr.js"></script>
+  <script src="/js/push-notifications.js"></script>
+</body>
+</html>

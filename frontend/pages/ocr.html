@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Scan Grocery Items</title>
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="../css/ocr.css">
+</head>
+<body>
+    <header>
+        <nav>
+            <div class="container">
+                <a href="home.html">Home</a>
+                <a href="ocr.html" class="active">Scan Items</a>
+                <a href="#" id="logout">Logout</a>
+            </div>
+        </nav>
+    </header>
+    
+    <main class="container">
+        <h1>Scan Grocery Items</h1>
+        
+        <div class="ocr-container">
+            <div class="upload-container">
+                <input type="file" id="imageUpload" accept="image/*" capture>
+                <button id="captureBtn">Take Photo</button>
+                <p>Or drag and drop an image here</p>
+            </div>
+            
+            <div class="preview-container">
+                <img id="imagePreview" alt="Preview">
+            </div>
+            
+            <div class="result-container">
+                <h2>Detected Information</h2>
+                <div id="scanStatus">Ready to scan</div>
+                <div id="scanResults"></div>
+                
+                <form id="addGroceryForm">
+                    <div class="form-group">
+                        <label for="itemName">Item Name</label>
+                        <input type="text" id="itemName" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="expiryDate">Expiry Date</label>
+                        <input type="date" id="expiryDate" required>
+                    </div>
+                    <button type="submit" id="addToListBtn">Add to My List</button>
+                </form>
+            </div>
+        </div>
+    </main>
+
+    <script src="https://cdn.jsdelivr.net/npm/tesseract.js@4.1.1/dist/tesseract.min.js"></script>
+    <script src="../js/auth.js"></script>
+    <script src="../js/ocr.js"></script>
+</body>
+</html>
