@@ -77,8 +77,8 @@ Keep-It-Fresh/
 
 ### 📦 Clone the Repository
 ```bash
-git clone https://github.com/your-username/grocery-tracker.git
-cd grocery-tracker
+git clone https://github.com/deslin-delvi/Keep-It-Fresh.git
+cd Keep-It-Fresh
 ```
 ### 📁 Setup Environment
 
