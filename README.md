@@ -1,14 +1,21 @@
-# Grocery Tracker App 🛒
+# 🥬 Keep-It-Fresh: Grocery Tracker with AI Chatbot
 
-This is a full-stack Grocery List Management Application with AI recipe suggestions and grocery-related queries.
+A full-stack web application for managing grocery items, featuring an AI-powered chatbot that suggests recipes and answers grocery-related queries.
+
+---
 
 ## 🧩 Features
-- Frontend with HTML, CSS, and JavaScript
-- Backend using Node.js
-- MongoDB for data storage
-- AI chatbot for:
+
+- 🖥️ Frontend with HTML, CSS, and JavaScript
+- ⚙️ Backend using Node.js and Express
+- 🗃️ MongoDB for database storage
+- 🤖 AI Chatbot for:
   - Suggesting recipes based on available grocery items
-  - Handling grocery-related queries
+  - Answering grocery-related questions
+- 🔔 Push notification support with service workers
+- 🔐 User authentication (Login/Register)
+
+---
 
 ## 🗂 Project Structure
 
@@ -39,7 +46,7 @@ Keep-It-Fresh/
 │   ├── services/
 │   │   └── pushNotificationService.js
 │   |
-│   └── server.js           # Entry point of your backend server
+│   └── server.js       # Entry point of your backend server
 │
 ├── frontend/
 │   ├── css/
