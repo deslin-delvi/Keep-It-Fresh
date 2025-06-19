@@ -95,3 +95,7 @@ node backend/server.js
 Ensure MongoDB is running locally or provide a MongoDB Atlas URI in .env.
 
 Service workers and push notifications are supported in supported browsers.
+
+## 📄 License
+
+This project is licensed under the [MIT License](LICENSE).
