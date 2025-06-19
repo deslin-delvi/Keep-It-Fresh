@@ -1,6 +1,6 @@
 # Grocery Tracker App 🛒
 
-This is a full-stack Grocery List Tracking Application with AI recipe suggestions and grocery-related queries.
+This is a full-stack Grocery List Management Application with AI recipe suggestions and grocery-related queries.
 
 ## 🧩 Features
 - Frontend with HTML, CSS, and JavaScript
