@@ -96,6 +96,17 @@ Ensure MongoDB is running locally or provide a MongoDB Atlas URI in .env.
 
 Service workers and push notifications are supported in supported browsers.
 
+---
+
+## 📬 Contact
+
+Built by **Deslin Delvi**  
+📧 deslindelvi7@gmail.com
+🔗 [GitHub](https://github.com/deslin-delvi)
+🔗 [LinkedIn](https://www.linkedin.com/in/deslin-delvi/)
+
+---
+
 ## 📄 License
 
 This project is licensed under the [MIT License](LICENSE).
