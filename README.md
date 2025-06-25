@@ -100,9 +100,13 @@ Service workers and push notifications are supported in supported browsers.
 
 ## 📬 Contact
 
-Built by **Deslin Delvi**  
+Built by **Deslin Delvi**
+
+For queries, contact me@:
 📧 deslindelvi7@gmail.com
+
 🔗 [GitHub](https://github.com/deslin-delvi)
+
 🔗 [LinkedIn](https://www.linkedin.com/in/deslin-delvi/)
 
 ---
