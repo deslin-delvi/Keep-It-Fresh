@@ -100,8 +100,6 @@ Service workers and push notifications are supported in supported browsers.
 
 ## 📬 Contact
 
-Built by **Deslin Delvi**
-
 For queries, contact me@:
 
 [![LinkedIn](https://img.shields.io/badge/LinkedIn-blue?style=for-the-badge&logo=linkedin)](https://linkedin.com/in/deslin-delvi)  
