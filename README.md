@@ -46,7 +46,7 @@ Keep-It-Fresh/
 │   ├── services/
 │   │   └── pushNotificationService.js
 │   |
-│   └── server.js       # Entry point of your backend server
+│   └── server.js
 │
 ├── frontend/
 │   ├── css/
@@ -67,7 +67,7 @@ Keep-It-Fresh/
 │   │   ├── login.html
 │   │   ├── ocr.html
 │   │   └── register.html
-│   └── service-worker.js   # For offline support / push notifications
+│   └── service-worker.js
 ```
 
 
