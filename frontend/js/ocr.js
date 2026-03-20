@@ -13,72 +13,77 @@ document.addEventListener('DOMContentLoaded', function() {
     const itemNameInput = document.getElementById('itemName');
     const expiryDateInput = document.getElementById('expiryDate');
     const addGroceryForm = document.getElementById('addGroceryForm');
-    
-    // Setup drag and drop
+
+    // ── Logout handler ──
+    const logoutBtn = document.getElementById('logout');
+    if (logoutBtn) {
+        logoutBtn.addEventListener('click', (e) => {
+            e.preventDefault();
+            localStorage.removeItem('token');
+            localStorage.removeItem('user');
+            window.location.href = 'login.html';
+        });
+    }
+
+    // ── Drag and drop (uses CSS class instead of inline style) ──
     const uploadContainer = document.querySelector('.upload-container');
-    
+
     uploadContainer.addEventListener('dragover', (e) => {
         e.preventDefault();
-        uploadContainer.style.borderColor = '#4CAF50';
+        uploadContainer.classList.add('drag-over');
     });
-    
+
     uploadContainer.addEventListener('dragleave', () => {
-        uploadContainer.style.borderColor = '#ccc';
+        uploadContainer.classList.remove('drag-over');
     });
-    
+
     uploadContainer.addEventListener('drop', (e) => {
         e.preventDefault();
-        uploadContainer.style.borderColor = '#ccc';
-        
+        uploadContainer.classList.remove('drag-over');
         if (e.dataTransfer.files.length) {
             handleImageFile(e.dataTransfer.files[0]);
         }
     });
-    
-    // Setup file input
+
+    // ── File input ──
     imageUpload.addEventListener('change', (e) => {
         if (e.target.files.length) {
             handleImageFile(e.target.files[0]);
         }
     });
-    
-    // Setup capture button for mobile
+
+    // ── Capture button (mobile camera) ──
     captureBtn.addEventListener('click', () => {
-        // For mobile devices, specifically request camera
         if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
             imageUpload.setAttribute('capture', 'environment');
         }
         imageUpload.click();
     });
-    
-    // Handle the selected image file
+
+    // ── Handle selected image file ──
     function handleImageFile(file) {
-        // Validate file
         if (!file || !/^image\//i.test(file.type)) {
             scanStatus.textContent = 'Error: Please select a valid image file';
             return;
         }
-        
-        // Display preview
+
         const reader = new FileReader();
         reader.onload = (e) => {
             imagePreview.src = e.target.result;
             imagePreview.style.display = 'block';
-            
-            // Upload image for OCR processing
             uploadAndProcessImage(file);
         };
         reader.readAsDataURL(file);
     }
-    
-    // Upload and process image with backend
+
+    // ── Upload and process image with backend ──
     async function uploadAndProcessImage(file) {
         scanStatus.textContent = 'Uploading and processing image...';
         scanResults.textContent = '';
-        
+
         const formData = new FormData();
         formData.append('image', file);
-        
+
         try {
             const response = await fetch('/api/ocr/process', {
                 method: 'POST',
@@ -87,22 +92,20 @@ document.addEventListener('DOMContentLoaded', function() {
                 },
                 body: formData
             });
-            
+
             if (!response.ok) {
                 throw new Error(`Server returned ${response.status}: ${response.statusText}`);
             }
-            
+
             const data = await response.json();
-            
+
             if (data.success) {
                 scanStatus.textContent = 'Processing complete!';
                 scanResults.textContent = data.text;
-                
-                // Populate form with extracted info
+
                 if (data.extractedInfo.productName) {
                     itemNameInput.value = data.extractedInfo.productName;
                 }
-                
                 if (data.extractedInfo.expiryDate) {
                     expiryDateInput.value = data.extractedInfo.expiryDate;
                 }
@@ -115,16 +118,16 @@ document.addEventListener('DOMContentLoaded', function() {
             console.error('OCR processing error:', err);
         }
     }
-    
-    // Handle form submission
+
+    // ── Form submission ──
     addGroceryForm.addEventListener('submit', async (e) => {
         e.preventDefault();
-        
+
         const grocery = {
             name: itemNameInput.value,
             expiryDate: expiryDateInput.value
         };
-        
+
         try {
             const response = await fetch('/api/groceries', {
                 method: 'POST',
@@ -134,18 +137,13 @@ document.addEventListener('DOMContentLoaded', function() {
                 },
                 body: JSON.stringify(grocery)
             });
-            
+
             if (response.ok) {
                 alert('Item added successfully!');
-                
-                // Reset form and preview
                 addGroceryForm.reset();
                 imagePreview.style.display = 'none';
                 scanResults.textContent = '';
                 scanStatus.textContent = 'Ready to scan';
-                
-                // Optionally redirect to home page
-                // window.location.href = 'home.html';
             } else {
                 const data = await response.json();
                 alert(`Error: ${data.message || 'Failed to add item'}`);

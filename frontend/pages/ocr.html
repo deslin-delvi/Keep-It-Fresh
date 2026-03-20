@@ -1,59 +1,89 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Scan Grocery Items</title>
-    <link rel="stylesheet" href="../css/style.css">
-    <link rel="stylesheet" href="../css/ocr.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Scan Grocery Items — Keep It Fresh</title>
+  <link rel="stylesheet" href="../css/style.css">
+  <link rel="stylesheet" href="../css/ocr.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
 </head>
 <body>
-    <header>
-        <nav>
-            <div class="container">
-                <a href="home.html">Home</a>
-                <a href="ocr.html" class="active">Scan Items</a>
-                <a href="#" id="logout">Logout</a>
-            </div>
-        </nav>
-    </header>
-    
-    <main class="container">
-        <h1>Scan Grocery Items</h1>
-        
-        <div class="ocr-container">
-            <div class="upload-container">
-                <input type="file" id="imageUpload" accept="image/*" capture>
-                <button id="captureBtn">Take Photo</button>
-                <p>Or drag and drop an image here</p>
-            </div>
-            
-            <div class="preview-container">
-                <img id="imagePreview" alt="Preview">
-            </div>
-            
-            <div class="result-container">
-                <h2>Detected Information</h2>
-                <div id="scanStatus">Ready to scan</div>
-                <div id="scanResults"></div>
-                
-                <form id="addGroceryForm">
-                    <div class="form-group">
-                        <label for="itemName">Item Name</label>
-                        <input type="text" id="itemName" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="expiryDate">Expiry Date</label>
-                        <input type="date" id="expiryDate" required>
-                    </div>
-                    <button type="submit" id="addToListBtn">Add to My List</button>
-                </form>
-            </div>
-        </div>
-    </main>
 
-    <script src="https://cdn.jsdelivr.net/npm/tesseract.js@4.1.1/dist/tesseract.min.js"></script>
-    <script src="../js/auth.js"></script>
-    <script src="../js/ocr.js"></script>
+  <header class="header">
+    <div class="header-content">
+      <h1>Keep It Fresh</h1>
+      <nav class="ocr-nav">
+        <a href="home.html" class="nav-link"><i class="fas fa-home"></i> Home</a>
+        <a href="ocr.html" class="nav-link active"><i class="fas fa-camera"></i> Scan Items</a>
+        <a href="#" id="logout" class="btn btn-small btn-danger">Logout</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="main-content">
+    <div class="container">
+
+      <div class="ocr-page-header">
+        <h2 class="ocr-page-title">
+          <i class="fas fa-camera-retro"></i> Scan Grocery Items
+        </h2>
+        <p class="ocr-page-subtitle">Upload or capture a product image to auto-detect name and expiry date</p>
+      </div>
+
+      <div class="ocr-container">
+
+        <!-- Upload Zone -->
+        <div class="upload-container" id="dropZone">
+          <div class="upload-icon">📷</div>
+          <p class="upload-title">Drop an image here, or</p>
+          <div class="upload-actions">
+            <label for="imageUpload" class="btn btn-primary" style="cursor:pointer;">
+              <i class="fas fa-upload"></i> Choose Image
+            </label>
+            <button id="captureBtn" class="btn btn-secondary">
+              <i class="fas fa-camera"></i> Take Photo
+            </button>
+          </div>
+          <input type="file" id="imageUpload" accept="image/*" capture style="display:none;">
+          <p class="upload-hint">Supports JPG, PNG — capture expiry date labels clearly</p>
+        </div>
+
+        <!-- Preview -->
+        <div class="preview-container">
+          <img id="imagePreview" alt="Scanned product preview">
+        </div>
+
+        <!-- Results + Form -->
+        <div class="result-container">
+          <div class="scan-status-bar">
+            <span class="scan-dot"></span>
+            <span id="scanStatus">Ready to scan</span>
+          </div>
+
+          <div id="scanResults"></div>
+
+          <form id="addGroceryForm">
+            <div class="form-group">
+              <label for="itemName">Item Name</label>
+              <input type="text" id="itemName" placeholder="Detected or enter manually" required>
+            </div>
+            <div class="form-group">
+              <label for="expiryDate">Expiry Date</label>
+              <input type="date" id="expiryDate" required>
+            </div>
+            <button type="submit" id="addToListBtn" class="btn btn-primary" style="width:100%;margin-top:8px;">
+              <i class="fas fa-plus"></i> Add to My List
+            </button>
+          </form>
+        </div>
+
+      </div>
+    </div>
+  </main>
+
+  <script src="https://cdn.jsdelivr.net/npm/tesseract.js@4.1.1/dist/tesseract.min.js"></script>
+  <script src="../js/auth.js"></script>
+  <script src="../js/ocr.js"></script>
 </body>
 </html>
