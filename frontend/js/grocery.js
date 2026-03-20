@@ -310,10 +310,38 @@ function renderGroceryList(groceries) {
   });
 }
 
+// ── Skeleton Loading Cards ──
+function showSkeletons(count = 4) {
+  const groceryList = document.getElementById('grocery-list');
+  let html = '';
+  for (let i = 0; i < count; i++) {
+    html += `
+      <div class="grocery-item skeleton-card">
+        <div class="skeleton skeleton-avatar"></div>
+        <div class="grocery-info" style="flex:1;">
+          <div class="skeleton skeleton-title"></div>
+          <div class="skeleton-row">
+            <div class="skeleton skeleton-tag"></div>
+            <div class="skeleton skeleton-tag"></div>
+            <div class="skeleton skeleton-text"></div>
+          </div>
+        </div>
+        <div class="skeleton-actions">
+          <div class="skeleton skeleton-btn"></div>
+          <div class="skeleton skeleton-btn"></div>
+        </div>
+      </div>`;
+  }
+  groceryList.innerHTML = html;
+}
+
 // Load groceries from API
 async function loadGroceries() {
   const groceryList = document.getElementById('grocery-list');
   const token       = localStorage.getItem('token');
+
+  // Show skeletons immediately before API call
+  showSkeletons(4);
 
   try {
     const response = await fetch('/api/groceries', {
