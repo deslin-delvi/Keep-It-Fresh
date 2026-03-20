@@ -135,6 +135,75 @@ function renderStatsBar(categoryFiltered, fullGroceries) {
   });
 }
 
+// ── Category emoji fallbacks ──
+const CATEGORY_EMOJI = {
+  fruits:     '🍎',
+  vegetables: '🥦',
+  dairy:      '🧀',
+  meat:       '🥩',
+  grains:     '🌾',
+  snacks:     '🍪',
+  beverages:  '🥤',
+  frozen:     '🧊',
+  canned:     '🥫',
+  general:    '📦'
+};
+
+// ── Fetch product image — Wikipedia first, Open Food Facts fallback ──
+async function fetchProductImage(name, category, groceryId) {
+  const cacheKey = `img_${name.trim().toLowerCase()}`;
+  const cached   = localStorage.getItem(cacheKey);
+
+  if (cached) {
+    if (cached !== 'none') updateCardImage(groceryId, cached, category);
+    return;
+  }
+
+  // 1️⃣ Wikipedia — accurate for real food items (apple → apple, onion → onion)
+  try {
+    const url      = `https://en.wikipedia.org/api/rest_v1/page/summary/${encodeURIComponent(name.trim())}`;
+    const response = await fetch(url);
+    if (response.ok) {
+      const data   = await response.json();
+      const imgUrl = data?.thumbnail?.source;
+      if (imgUrl) {
+        localStorage.setItem(cacheKey, imgUrl);
+        updateCardImage(groceryId, imgUrl, category);
+        return;
+      }
+    }
+  } catch (err) {
+    console.warn('Wikipedia fetch failed for:', name);
+  }
+
+  // 2️⃣ Open Food Facts — better for branded/packaged products, filtered by category
+  try {
+    const url      = `https://world.openfoodfacts.org/cgi/search.pl?search_terms=${encodeURIComponent(name.trim())}&tagtype_0=categories&tag_contains_0=contains&tag_0=${encodeURIComponent(category)}&json=1&page_size=1&fields=image_front_thumb_url`;
+    const response = await fetch(url);
+    const data     = await response.json();
+    const imgUrl   = data?.products?.[0]?.image_front_thumb_url;
+    if (imgUrl) {
+      localStorage.setItem(cacheKey, imgUrl);
+      updateCardImage(groceryId, imgUrl, category);
+      return;
+    }
+  } catch (err) {
+    console.warn('Open Food Facts fetch failed for:', name);
+  }
+
+  // 3️⃣ Nothing found — cache so we don't retry on next load
+  localStorage.setItem(cacheKey, 'none');
+}
+
+// ── Swap emoji for real image once fetched ──
+function updateCardImage(groceryId, imgUrl, category) {
+  const avatar = document.querySelector(`.grocery-avatar[data-id="${groceryId}"]`);
+  if (!avatar) return;
+  const fallback = CATEGORY_EMOJI[category] || '📦';
+  avatar.innerHTML = `<img src="${imgUrl}" alt="product"
+    onerror="this.parentElement.innerHTML='<span>${fallback}</span>'">`;
+}
+
 // ── Render grocery list ──
 function renderGroceryList(groceries) {
   const groceryList    = document.getElementById('grocery-list');
@@ -188,8 +257,13 @@ function renderGroceryList(groceries) {
       expiryText  = daysDiff === 0 ? 'Expires today' : `${daysDiff} days left`;
     }
 
+    const emoji = CATEGORY_EMOJI[grocery.category] || '📦';
+
     groceryHTML += `
       <div class="grocery-item" data-id="${grocery._id}">
+        <div class="grocery-avatar" data-id="${grocery._id}">
+          <span>${emoji}</span>
+        </div>
         <div class="grocery-info">
           <div class="grocery-name">${grocery.name}</div>
           <div class="grocery-details">
@@ -225,6 +299,14 @@ function renderGroceryList(groceries) {
       const confirmed = await showConfirm(`Delete "${itemName}" from your list?`);
       if (confirmed) deleteGrocery(groceryId);
     });
+  });
+
+  // Fetch images in background after cards are in DOM
+  // Small staggered delay so requests don't all fire at once
+  filtered.forEach((grocery, i) => {
+    setTimeout(() => {
+      fetchProductImage(grocery.name, grocery.category, grocery._id);
+    }, i * 120);
   });
 }
 
@@ -296,6 +378,13 @@ async function addGrocery(e) {
       body: JSON.stringify(groceryData)
     });
 
+    const data = await response.json();
+
+    if (response.status === 400) {
+      showToast(data.message, 'error');
+      return;
+    }
+
     if (!response.ok) throw new Error('Failed to add grocery');
 
     closeModals();
@@ -333,6 +422,13 @@ async function updateGrocery(e) {
       },
       body: JSON.stringify(groceryData)
     });
+
+    const data = await response.json();
+
+    if (response.status === 400) {
+      showToast(data.message, 'error');
+      return;
+    }
 
     if (!response.ok) throw new Error('Failed to update grocery');
 
