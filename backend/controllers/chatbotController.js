@@ -7,30 +7,40 @@ const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
 exports.getChatbotResponse = async (req, res) => {
   try {
     const { message, groceryList } = req.body;
-    
-    // Create a model with Gemini
-    const model = genAI.getGenerativeModel({ model: "gemini-1.5-pro" });
-    
-    // Create a prompt that includes the user's available groceries
-    let prompt = "You are a helpful food assistant that provides recipe suggestions and answers food-related questions. ";
-    
-    if (groceryList && groceryList.length > 0) {
-      prompt += `The user has these groceries: ${groceryList.map(item => item.name).join(', ')}. `;
-      
-      // Include expiry information if available to prioritize ingredients expiring soon
-      const expiringItems = groceryList
-        .filter(item => item.expiryDate)
-        .sort((a, b) => new Date(a.expiryDate) - new Date(b.expiryDate))
-        .slice(0, 5);
-      
-      if (expiringItems.length > 0) {
-        prompt += `These items are expiring soon: ${expiringItems.map(item => 
-          `${item.name} (expires: ${new Date(item.expiryDate).toLocaleDateString()})`
-        ).join(', ')}. `;
-      }
+
+    const model = genAI.getGenerativeModel({ model: "gemini-2.5-pro" });
+
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+
+    // Filter out expired items
+    const validItems = (groceryList || []).filter(item => {
+      if (!item.expiryDate) return true;
+      return new Date(item.expiryDate) >= today;
+    });
+
+    const expiringItems = validItems
+      .filter(item => item.expiryDate)
+      .sort((a, b) => new Date(a.expiryDate) - new Date(b.expiryDate))
+      .slice(0, 5);
+
+    let prompt = `You are a friendly grocery assistant for the "Keep It Fresh" app. 
+You help users manage their groceries, suggest recipes, and reduce food waste.
+Always respond in clean plain text without any markdown symbols like **, *, ##, or bullet dashes.
+Use simple numbered lists or line breaks instead.
+Keep responses concise and practical.\n\n`;
+
+    if (validItems.length > 0) {
+      prompt += `User's available groceries: ${validItems.map(i => i.name).join(', ')}.\n`;
     }
-    
-    prompt += `Provide concise, practical advice. User's question: ${message}`;
+
+    if (expiringItems.length > 0) {
+      prompt += `Items expiring soon (use these first): ${expiringItems.map(i =>
+        `${i.name} (expires ${new Date(i.expiryDate).toLocaleDateString()})`
+      ).join(', ')}.\n`;
+    }
+
+    prompt += `\nUser's question: ${message}`;
 
     // Generate content with Gemini
     const result = await model.generateContent(prompt);
@@ -63,10 +73,26 @@ exports.getRecipeSuggestions = async (req, res) => {
       });
     }
     
-    const model = genAI.getGenerativeModel({ model: "gemini-1.5-pro" });
-    
-    // Sort groceries by expiry date to prioritize
-    const sortedGroceries = [...groceryList].sort((a, b) => {
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+
+    // Filter out expired items before suggesting recipes
+    const validGroceries = groceryList.filter(item => {
+      if (!item.expiryDate) return true;
+      return new Date(item.expiryDate) >= today;
+    });
+
+    if (validGroceries.length === 0) {
+      return res.status(400).json({
+        success: false,
+        message: 'All your grocery items have expired. Please add fresh items to get recipe suggestions.'
+      });
+    }
+
+    const model = genAI.getGenerativeModel({ model: "gemini-2.5-pro" });
+
+    // Sort valid groceries by expiry date to prioritize
+    const sortedGroceries = [...validGroceries].sort((a, b) => {
       if (!a.expiryDate) return 1;
       if (!b.expiryDate) return -1;
       return new Date(a.expiryDate) - new Date(b.expiryDate);

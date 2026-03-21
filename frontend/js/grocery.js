@@ -20,11 +20,15 @@ document.addEventListener('DOMContentLoaded', () => {
   loadGroceries();
   setCurrentDate();
 
-  document.getElementById('logout-btn').addEventListener('click', logout);
-  document.getElementById('add-grocery-btn').addEventListener('click', openAddGroceryModal);
+  const logoutBtn    = document.getElementById('logout-btn');
+  const addBtn       = document.getElementById('add-grocery-btn');
+  const filterSelect = document.getElementById('expiry-filter');
+  const addForm      = document.getElementById('add-grocery-form');
+  const editForm     = document.getElementById('edit-grocery-form');
 
-  // When category changes, reset expiry pill and reload
-  document.getElementById('expiry-filter').addEventListener('change', () => {
+  if (logoutBtn)    logoutBtn.addEventListener('click', logout);
+  if (addBtn)       addBtn.addEventListener('click', openAddGroceryModal);
+  if (filterSelect) filterSelect.addEventListener('change', () => {
     window._activeExpiryFilter = 'all';
     loadGroceries();
   });
@@ -36,8 +40,8 @@ document.addEventListener('DOMContentLoaded', () => {
     if (e.target.classList.contains('modal')) closeModals();
   });
 
-  document.getElementById('add-grocery-form').addEventListener('submit', addGrocery);
-  document.getElementById('edit-grocery-form').addEventListener('submit', updateGrocery);
+  if (addForm)  addForm.addEventListener('submit', addGrocery);
+  if (editForm) editForm.addEventListener('submit', updateGrocery);
 });
 
 function setCurrentDate() {

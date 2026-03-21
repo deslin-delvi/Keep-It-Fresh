@@ -87,7 +87,7 @@ document.addEventListener('DOMContentLoaded', function() {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
-          'x-auth-token': localStorage.getItem('token') || ''
+          'Authorization': `Bearer ${localStorage.getItem('token') || ''}`
         },
         body: JSON.stringify(data)
       })
@@ -212,11 +212,25 @@ document.addEventListener('DOMContentLoaded', function() {
       });
     }
     
+    // Convert basic markdown to clean HTML
+    function formatMessage(text) {
+      return text
+        .replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>')  // **bold**
+        .replace(/\*(.+?)\*/g, '<em>$1</em>')              // *italic*
+        .replace(/^#{1,3}\s+(.+)$/gm, '<strong>$1</strong>') // ## headings
+        .replace(/^\s*[-•]\s+/gm, '• ')                    // bullet points
+        .replace(/\n/g, '<br>');                            // line breaks
+    }
+
     // Function to add a message to the chat
     function addMessage(message, sender) {
       const messageElement = document.createElement('div');
       messageElement.className = `message ${sender}-message`;
-      messageElement.textContent = message;
+      if (sender === 'bot') {
+        messageElement.innerHTML = formatMessage(message);
+      } else {
+        messageElement.textContent = message;
+      }
       messageContainer.appendChild(messageElement);
       scrollToBottom();
     }
@@ -284,7 +298,7 @@ document.addEventListener('DOMContentLoaded', function() {
           fetch('/api/groceries', {
             method: 'GET',
             headers: {
-              'x-auth-token': localStorage.getItem('token') || ''
+              'Authorization': `Bearer ${localStorage.getItem('token') || ''}`
             }
           })
           .then(response => {
