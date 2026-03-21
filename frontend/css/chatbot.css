@@ -146,3 +146,89 @@
   .recipe-expiring {
     border-left: 4px solid #ff9800;
   }
+/* ════════════════════════════════
+   CHATBOT — POSITION FIX
+   (toggle and send button overlap)
+   ════════════════════════════════ */
+
+/* Move chatbot container above the toggle button */
+.chatbot-container {
+  bottom: 90px !important;
+  right: 20px !important;
+}
+
+/* ════════════════════════════════
+   CHATBOT — DARK MODE
+   ════════════════════════════════ */
+[data-theme="dark"] .chatbot-container {
+  background: #1E1E1E;
+  box-shadow: 0 0 20px rgba(0,0,0,0.5);
+  border: 1px solid #2E2E2E;
+}
+
+[data-theme="dark"] .chatbot-header {
+  background: linear-gradient(135deg, #2D6A4F 0%, #1B4332 100%);
+}
+
+[data-theme="dark"] .chatbot-messages {
+  background: #1E1E1E;
+}
+
+[data-theme="dark"] .bot-message {
+  background: #252525;
+  color: #E8EDE9;
+  border: 1px solid #2E2E2E;
+}
+
+[data-theme="dark"] .user-message {
+  background: #1A3828;
+  color: #95D5B2;
+  border: 1px solid #2A4A38;
+}
+
+[data-theme="dark"] .typing-indicator {
+  background: #252525;
+  color: #9EB3A4;
+}
+
+[data-theme="dark"] .chatbot-input {
+  background: #1E1E1E;
+  border-top: 1px solid #2E2E2E;
+}
+
+[data-theme="dark"] .chatbot-input input {
+  background: #252525;
+  border: 1px solid #3A3A3A;
+  color: #E8EDE9;
+}
+
+[data-theme="dark"] .chatbot-input input::placeholder {
+  color: #617A6C;
+}
+
+[data-theme="dark"] .chatbot-input input:focus {
+  border-color: #52B788;
+  outline: none;
+}
+
+[data-theme="dark"] .chatbot-input button {
+  background: linear-gradient(140deg, #2D6A4F 0%, #1B4332 100%);
+}
+
+[data-theme="dark"] .chatbot-input button:hover {
+  background: linear-gradient(140deg, #40916C 0%, #2D6A4F 100%);
+}
+
+[data-theme="dark"] .recipe-suggestion {
+  background: #252525;
+  border: 1px solid #2E2E2E;
+  color: #E8EDE9;
+}
+
+[data-theme="dark"] .recipe-suggestion h3 {
+  color: #74C69D;
+}
+
+[data-theme="dark"] .recipe-expiring {
+  border-left: 4px solid #F4A261;
+}
