@@ -49,6 +49,8 @@ if (loginForm) {
           name: data.name,
           email: data.email
         }));
+        // Clear any previous user's cached grocery list
+        localStorage.removeItem('groceryList');
         
         // Redirect to home page
         window.location.href = './home.html';
@@ -99,6 +101,8 @@ if (registerForm) {
           name: data.name,
           email: data.email
         }));
+        // Clear any previous user's cached grocery list
+        localStorage.removeItem('groceryList');
         
         // Redirect to home page
         window.location.href = './home.html';

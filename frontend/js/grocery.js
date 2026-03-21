@@ -52,6 +52,7 @@ function setCurrentDate() {
 function logout() {
   localStorage.removeItem('token');
   localStorage.removeItem('user');
+  localStorage.removeItem('groceryList');
   window.location.href = './login.html';
 }
 
