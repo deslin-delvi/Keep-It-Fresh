@@ -4,6 +4,11 @@ const path = require('path');
 const fs = require('fs');
 const schedule = require('node-schedule');
 const dotenv = require('dotenv');
+const passport = require('passport');
+const session = require('express-session');
+const GoogleStrategy = require('passport-google-oauth20').Strategy;
+const jwt = require('jsonwebtoken');
+const User = require('./models/User');
 
 // Load environment variables
 dotenv.config();
@@ -42,6 +47,58 @@ app.use(cors({
     methods: ['GET', 'POST', 'PUT', 'DELETE'],
     credentials: true
 }));
+
+// Session middleware (required for passport)
+app.use(session({
+  secret: process.env.SESSION_SECRET || 'session_secret',
+  resave: false,
+  saveUninitialized: false
+}));
+
+// ── Passport Google OAuth Setup ──
+app.use(passport.initialize());
+app.use(passport.session());
+
+passport.use(new GoogleStrategy({
+  clientID:     process.env.GOOGLE_CLIENT_ID,
+  clientSecret: process.env.GOOGLE_CLIENT_SECRET,
+  callbackURL:  '/api/auth/google/callback'
+}, async (accessToken, refreshToken, profile, done) => {
+  try {
+    const email = profile.emails[0].value;
+    const name  = profile.displayName;
+    const googleId = profile.id;
+    const avatar = profile.photos?.[0]?.value || null;
+
+    // Find existing user by googleId or email
+    let user = await User.findOne({ $or: [{ googleId }, { email }] });
+
+    if (user) {
+      // Update googleId if user registered with email before
+      if (!user.googleId) {
+        user.googleId = googleId;
+        user.avatar   = avatar;
+        await user.save();
+      }
+    } else {
+      // Create new Google user
+      user = await User.create({ name, email, googleId, avatar });
+    }
+
+    // Attach JWT token to user object for the callback route
+    user.token = jwt.sign({ id: user._id }, process.env.JWT_SECRET, { expiresIn: '30d' });
+    return done(null, user);
+
+  } catch (error) {
+    return done(error, null);
+  }
+}));
+
+passport.serializeUser((user, done) => done(null, user._id));
+passport.deserializeUser(async (id, done) => {
+  const user = await User.findById(id);
+  done(null, user);
+});
 
 // Serve static files from frontend directory (except for pages)
 app.use(express.static(path.join(__dirname, '../frontend')));

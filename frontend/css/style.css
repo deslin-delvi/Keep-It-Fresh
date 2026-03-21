@@ -1016,3 +1016,65 @@ input::placeholder { color: var(--text-light); opacity: 0.8; }
 [data-theme="dark"] #addToListBtn:hover {
   box-shadow: 0 8px 24px rgba(27, 67, 50, 0.65);
 }
+/* ════════════════════════════════
+   GOOGLE OAUTH BUTTON
+   ════════════════════════════════ */
+.oauth-divider {
+  display: flex;
+  align-items: center;
+  margin: 20px 0;
+  gap: 12px;
+}
+
+.oauth-divider::before,
+.oauth-divider::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: var(--border);
+}
+
+.oauth-divider span {
+  color: var(--text-light);
+  font-size: 13px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.btn-google {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  width: 100%;
+  padding: 12px 20px;
+  background: var(--surface);
+  color: var(--text-dark);
+  border: 1.5px solid var(--border);
+  border-radius: var(--radius-md);
+  font-family: 'Nunito', sans-serif;
+  font-size: 15px;
+  font-weight: 700;
+  cursor: pointer;
+  text-decoration: none;
+  transition: var(--transition);
+  box-shadow: var(--shadow-xs);
+}
+
+.btn-google:hover {
+  background: var(--surface-alt);
+  border-color: var(--border-strong);
+  box-shadow: var(--shadow-sm);
+  transform: translateY(-1px);
+}
+
+[data-theme="dark"] .btn-google {
+  background: var(--surface);
+  color: var(--text-dark);
+  border-color: var(--border);
+}
+
+[data-theme="dark"] .btn-google:hover {
+  background: var(--surface-alt);
+}

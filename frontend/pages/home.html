@@ -258,6 +258,24 @@
 
   <!-- Tesseract.js for OCR -->
   <script src="../js/theme.js"></script>
+
+  <!-- Handle Google OAuth token from URL params -->
+  <script>
+    (function() {
+      const params = new URLSearchParams(window.location.search);
+      const token  = params.get('token');
+      const name   = params.get('name');
+      const id     = params.get('id');
+      if (token) {
+        localStorage.setItem('token', token);
+        localStorage.setItem('user', JSON.stringify({ id, name: decodeURIComponent(name), email: '' }));
+        localStorage.removeItem('groceryList');
+        // Clean URL without reloading
+        window.history.replaceState({}, document.title, '/home.html');
+      }
+    })();
+  </script>
+
   <script src="https://cdn.jsdelivr.net/npm/tesseract.js@4.1.1/dist/tesseract.min.js"></script>
   <script src="../js/toast.js"></script>
   <script src="../js/grocery.js"></script>
