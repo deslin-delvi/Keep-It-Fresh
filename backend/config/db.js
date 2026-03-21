@@ -1,13 +1,8 @@
-
 const mongoose = require('mongoose');
 
 const connectDB = async () => {
   try {
-    // Update the URI with your MongoDB connection string
-    const conn = await mongoose.connect('mongodb://localhost:27017/keepitfresh', {
-      useNewUrlParser: true,
-      useUnifiedTopology: true
-    });
+    const conn = await mongoose.connect(process.env.MONGODB_URI);
     console.log(`MongoDB Connected: ${conn.connection.host}`);
   } catch (error) {
     console.error(`Error: ${error.message}`);
