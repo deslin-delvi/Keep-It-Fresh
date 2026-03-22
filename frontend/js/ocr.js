@@ -45,18 +45,21 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     });
 
-    // ── File input ──
+    // ── File input change ──
     imageUpload.addEventListener('change', (e) => {
         if (e.target.files.length) {
             handleImageFile(e.target.files[0]);
         }
     });
 
-    // ── Capture button (mobile camera) ──
+    // ── Choose Image — opens gallery (no camera) ──
+    document.querySelector('label[for="imageUpload"]').addEventListener('click', () => {
+        imageUpload.removeAttribute('capture'); // ensure gallery opens
+    });
+
+    // ── Capture button — opens rear camera on mobile ──
     captureBtn.addEventListener('click', () => {
-        if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
-            imageUpload.setAttribute('capture', 'environment');
-        }
+        imageUpload.setAttribute('capture', 'environment');
         imageUpload.click();
     });
 
@@ -71,9 +74,51 @@ document.addEventListener('DOMContentLoaded', function() {
         reader.onload = (e) => {
             imagePreview.src = e.target.result;
             imagePreview.style.display = 'block';
-            uploadAndProcessImage(file);
+
+            // Compress image before uploading — speeds up mobile processing significantly
+            compressImage(file, 1200, 0.8).then(compressedBlob => {
+                // Convert blob to named File so multer's fileFilter passes
+                const compressedFile = new File([compressedBlob], 'image.jpg', { type: 'image/jpeg' });
+                uploadAndProcessImage(compressedFile);
+            });
         };
         reader.readAsDataURL(file);
+    }
+
+    // ── Compress image using Canvas API ──
+    // maxWidth: max dimension in px, quality: 0-1 JPEG quality
+    function compressImage(file, maxWidth = 1200, quality = 0.8) {
+        return new Promise((resolve) => {
+            const img = new Image();
+            const url = URL.createObjectURL(file);
+
+            img.onload = () => {
+                URL.revokeObjectURL(url);
+
+                // Calculate new dimensions maintaining aspect ratio
+                let width  = img.width;
+                let height = img.height;
+
+                if (width > maxWidth) {
+                    height = Math.round((height * maxWidth) / width);
+                    width  = maxWidth;
+                }
+
+                const canvas = document.createElement('canvas');
+                canvas.width  = width;
+                canvas.height = height;
+
+                const ctx = canvas.getContext('2d');
+                ctx.drawImage(img, 0, 0, width, height);
+
+                canvas.toBlob((blob) => {
+                    resolve(blob);
+                }, 'image/jpeg', quality);
+            };
+
+            img.onerror = () => resolve(file); // fallback to original if error
+            img.src = url;
+        });
     }
 
     // ── Upload and process image with backend ──
@@ -139,18 +184,20 @@ document.addEventListener('DOMContentLoaded', function() {
             });
 
             if (response.ok) {
-                alert('Item added successfully!');
+                scanStatus.textContent = 'Item added successfully! ✅';
                 addGroceryForm.reset();
                 imagePreview.style.display = 'none';
                 scanResults.textContent = '';
-                scanStatus.textContent = 'Ready to scan';
+                setTimeout(() => {
+                    scanStatus.textContent = 'Ready to scan';
+                }, 2000);
             } else {
                 const data = await response.json();
-                alert(`Error: ${data.message || 'Failed to add item'}`);
+                scanStatus.textContent = `Error: ${data.message || 'Failed to add item'}`;
             }
         } catch (err) {
             console.error(err);
-            alert('Error connecting to the server');
+            scanStatus.textContent = 'Error connecting to the server';
         }
     });
 });
