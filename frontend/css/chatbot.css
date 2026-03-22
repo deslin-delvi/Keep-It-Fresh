@@ -232,3 +232,23 @@
 [data-theme="dark"] .recipe-expiring {
   border-left: 4px solid #F4A261;
 }
+/* ════════════════════════════════
+   CHATBOT — MOBILE FIXES
+   ════════════════════════════════ */
+@media (max-width: 480px) {
+  .chatbot-container {
+    width: calc(100vw - 24px) !important;
+    height: 65vh !important;
+    bottom: 84px !important;
+    right: 12px !important;
+    left: 12px !important;
+  }
+
+  .chatbot-toggle {
+    width: 52px;
+    height: 52px;
+    font-size: 18px;
+    bottom: 16px;
+    right: 16px;
+  }
+}
