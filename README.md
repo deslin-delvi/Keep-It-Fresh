@@ -10,9 +10,7 @@ A full-stack web application for managing grocery items with AI-powered features
 - Add, edit, and delete grocery items with expiry tracking
 - Category-based filtering (Fruits, Vegetables, Dairy, Meat, Grains, Snacks, etc.)
 - Expiry status indicators — Fresh, Expiring Soon, Expired
-- Live stats bar showing counts per expiry status per category
 - Automatic product images fetched via Wikipedia & Open Food Facts APIs
-- Skeleton loading cards for a polished loading experience
 
 ### 📷 OCR Scanning
 - Scan product labels using **Google Cloud Vision API**
@@ -24,7 +22,6 @@ A full-stack web application for managing grocery items with AI-powered features
 - Powered by **Google Gemini 2.5 Pro**
 - Suggests recipes based on your current grocery list
 - Prioritises ingredients expiring soon to reduce food waste
-- Filters out expired items automatically
 - Markdown-formatted responses rendered cleanly in chat
 
 ### 🔐 Authentication
@@ -36,7 +33,6 @@ A full-stack web application for managing grocery items with AI-powered features
 ### 🎨 UI/UX
 - Premium nature-themed design (light & dark mode toggle)
 - Toast notifications replacing browser alerts
-- Custom confirm dialogs for delete actions
 - Fully responsive layout for mobile and desktop
 - Food name validation middleware prevents invalid entries
 
