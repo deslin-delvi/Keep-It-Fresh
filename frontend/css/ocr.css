@@ -243,3 +243,46 @@
   background: var(--surface-alt) !important;
   color: var(--text-dark) !important;
 }
+/* ════════════════════════════════
+   OCR — MOBILE FIXES
+   ════════════════════════════════ */
+@media (max-width: 480px) {
+  .ocr-nav {
+    gap: 4px;
+  }
+
+  .nav-link {
+    font-size: 12px;
+    padding: 6px 10px;
+  }
+
+  /* Hide text labels on very small screens, keep icons */
+  .nav-link i + * {
+    display: none;
+  }
+
+  .upload-container {
+    padding: 24px 16px;
+  }
+
+  .upload-icon { font-size: 34px; }
+  .upload-title { font-size: 14px; }
+
+  .upload-actions {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .upload-actions .btn {
+    width: 100%;
+    max-width: 260px;
+  }
+
+  .result-container {
+    padding: 16px;
+  }
+
+  .ocr-page-title {
+    font-size: 20px;
+  }
+}

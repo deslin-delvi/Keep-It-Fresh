@@ -1129,3 +1129,179 @@ input::placeholder { color: var(--text-light); opacity: 0.8; }
 [data-theme="dark"] .btn-secondary {
   background: linear-gradient(140deg, #3B9ADA 0%, #2176AE 100%) !important;
 }
+/* ════════════════════════════════
+   MOBILE RESPONSIVE FIXES
+   (max-width: 480px — phones)
+   ════════════════════════════════ */
+@media (max-width: 480px) {
+
+  /* ── Header ── */
+  .header-content {
+    padding: 10px 14px;
+    gap: 8px;
+  }
+
+  .header-content h1 {
+    font-size: 15px;
+    white-space: nowrap;
+  }
+
+  .header-content h1::before {
+    font-size: 15px;
+  }
+
+  .user-info {
+    gap: 8px;
+    flex-shrink: 0;
+  }
+
+  .user-info span {
+    font-size: 12px;
+    padding: 4px 10px;
+    max-width: 120px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .theme-toggle {
+    width: 34px;
+    height: 34px;
+    font-size: 15px;
+    flex-shrink: 0;
+  }
+
+  .btn-small {
+    padding: 5px 10px;
+    font-size: 12px;
+  }
+
+  /* ── Action Bar ── */
+  .grocery-actions {
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .grocery-actions > div {
+    display: flex;
+    gap: 10px;
+    width: 100%;
+  }
+
+  .grocery-actions > div .btn {
+    flex: 1;
+    font-size: 13px;
+    padding: 10px 12px;
+  }
+
+  .filter-options {
+    width: 100%;
+    justify-content: space-between;
+  }
+
+  /* ── Stats Bar ── */
+  #stats-bar {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+  }
+
+  .stat-pill {
+    padding: 10px 12px;
+    min-width: unset;
+    flex: unset;
+  }
+
+  .stat-num  { font-size: 22px; }
+  .stat-label { font-size: 10px; }
+
+  /* ── Grocery Card ── */
+  .grocery-item {
+    flex-direction: row;
+    align-items: flex-start;
+    padding: 14px;
+    gap: 12px;
+    flex-wrap: wrap;
+  }
+
+  .grocery-avatar {
+    width: 48px;
+    height: 48px;
+    font-size: 22px;
+    flex-shrink: 0;
+  }
+
+  .grocery-info {
+    flex: 1;
+    min-width: 0;
+  }
+
+  .grocery-name {
+    font-size: 15px;
+  }
+
+  .grocery-details {
+    flex-wrap: wrap;
+    gap: 6px;
+    font-size: 12px;
+  }
+
+  .grocery-item-actions {
+    display: flex;
+    gap: 8px;
+    margin-left: auto;
+    align-self: flex-end;
+    width: 100%;
+    justify-content: flex-end;
+    margin-top: 6px;
+  }
+
+  /* ── Modals ── */
+  .modal-content {
+    margin: 10px auto;
+    padding: 20px 16px;
+    width: 95%;
+    max-height: 90vh;
+    overflow-y: auto;
+  }
+
+  .modal-content h2 {
+    font-size: 18px;
+    margin-bottom: 18px;
+  }
+
+  .form-row {
+    flex-direction: column;
+    gap: 0;
+  }
+
+  /* ── Empty/Loading states ── */
+  .loading, .empty-list {
+    padding: 40px 20px;
+    font-size: 14px;
+  }
+
+  /* ── Welcome page ── */
+  .welcome-card {
+    padding: 36px 20px;
+  }
+
+  .welcome-card h1 {
+    font-size: 24px;
+  }
+
+  .button-group {
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .button-group .btn {
+    width: 100%;
+  }
+
+  /* ── Form pages ── */
+  .form-container {
+    margin: 20px auto;
+    padding: 24px 18px;
+  }
+}
