@@ -226,3 +226,20 @@
 
   .ocr-page-title { font-size: 21px; }
 }
+/* ════════════════════════════════
+   DARK MODE — OCR PAGE INPUT FIXES
+   ════════════════════════════════ */
+[data-theme="dark"] #itemName:focus,
+[data-theme="dark"] #expiryDate:focus,
+[data-theme="dark"] #expiryDate:active,
+[data-theme="dark"] #expiryDate {
+  background: var(--surface-alt) !important;
+  color: var(--text-dark) !important;
+  color-scheme: dark;
+}
+
+[data-theme="dark"] #addGroceryForm input,
+[data-theme="dark"] #addGroceryForm input:focus {
+  background: var(--surface-alt) !important;
+  color: var(--text-dark) !important;
+}

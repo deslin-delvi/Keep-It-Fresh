@@ -1078,3 +1078,54 @@ input::placeholder { color: var(--text-light); opacity: 0.8; }
 [data-theme="dark"] .btn-google:hover {
   background: var(--surface-alt);
 }
+/* ════════════════════════════════
+   DARK MODE — INPUT & CALENDAR FIXES
+   ════════════════════════════════ */
+
+/* Fix white background on focused/active inputs in dark mode */
+[data-theme="dark"] input:focus,
+[data-theme="dark"] input:active,
+[data-theme="dark"] input[type="date"]:focus,
+[data-theme="dark"] input[type="date"]:active,
+[data-theme="dark"] input[type="number"]:focus,
+[data-theme="dark"] input[type="text"]:focus,
+[data-theme="dark"] textarea:focus,
+[data-theme="dark"] select:focus {
+  background: var(--surface-alt) !important;
+  color: var(--text-dark) !important;
+  border-color: var(--green-primary) !important;
+  box-shadow: 0 0 0 3px rgba(82,183,136,0.18) !important;
+}
+
+/* Fix date input specifically */
+[data-theme="dark"] input[type="date"] {
+  background: var(--surface-alt);
+  color: var(--text-dark);
+  color-scheme: dark;
+}
+
+/* Calendar picker — dark mode */
+[data-theme="dark"] input[type="date"]::-webkit-calendar-picker-indicator {
+  filter: invert(1);
+  opacity: 0.7;
+  cursor: pointer;
+}
+
+/* ════════════════════════════════
+   DARK MODE — ADD GROCERY BUTTON FIX
+   ════════════════════════════════ */
+[data-theme="dark"] .btn-primary,
+[data-theme="dark"] button[type="submit"].btn-primary {
+  background: linear-gradient(140deg, #2D6A4F 0%, #1B4332 100%) !important;
+  box-shadow: 0 4px 14px rgba(27, 67, 50, 0.5) !important;
+}
+
+[data-theme="dark"] .btn-primary:hover,
+[data-theme="dark"] button[type="submit"].btn-primary:hover {
+  box-shadow: 0 8px 24px rgba(27, 67, 50, 0.65) !important;
+}
+
+/* Keep scan product button (secondary) unaffected */
+[data-theme="dark"] .btn-secondary {
+  background: linear-gradient(140deg, #3B9ADA 0%, #2176AE 100%) !important;
+}
